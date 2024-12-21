@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\personalBlog.Data\personalBlog.Data.csproj" />
+        <ProjectReference Include="..\..\personalBlog.Logic\personalBlog.Logic.csproj" />
+        <ProjectReference Include="..\personalBlog.Web.Client\personalBlog.Web.Client.csproj"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.*"/>
+    </ItemGroup>
+
+</Project>
