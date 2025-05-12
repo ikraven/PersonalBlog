@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using personalBlog.DAta.DbContext;
 using personalBlog.Domain.Models.Posts;
+using personalBlog.Shared.DTOs;
 using personalBlog.Shared.DTOs.Post;
 
 namespace personalBlog.Data.Repositories.Posts;
@@ -34,5 +35,22 @@ public class PostsRepository : Repository<Post>, IPostsRepository
             }).FirstOrDefaultAsync(cancellationToken);
         
         return data;
+    }
+
+    public async ValueTask<ListPaged<PostListDto>> GetPostsByCategoryIdAsync(int startRow, int size, CancellationToken cancellationToken = default)
+    {
+        var query = GetQueryable()
+            .AsNoTracking()
+            .OrderByDescending(o => o.PublishDate)
+            .Select(s => new PostListDto()
+            {
+                PostName = s.PostTitle,
+                PostPublishDate = s.PublishDate,
+                Status = s.Status.ToString(),
+            });
+        var count = await query.CountAsync(cancellationToken);
+        var list = await query.Skip(startRow).Take(size).ToListAsync(cancellationToken);
+
+        return new ListPaged<PostListDto>(list, count);
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace personalBlog.Api.Controllers;
 
+[ApiController]
 public abstract class BlogBaseController  : ControllerBase
 {
     

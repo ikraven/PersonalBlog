@@ -1,0 +1,89 @@
+@page "/CreatePostPage"
+@using personalBlog.Shared.DTOs.Post
+@using personalBlog.Web.Client.Services.Post
+@implements IDisposable
+
+@inject IPostService PostService
+
+<MudGrid>
+    <MudItem>
+        <h3>Título</h3>
+        <MudTextField @bind-Value="_title" Variant="Variant.Text"></MudTextField>
+        <h3>Contenido</h3>
+        <MudTextField T="string" Variant="Variant.Text" Immediate="true" @bind-Value="_body"  Lines="5" />
+        <MudMarkdown  Value="@_body"/>
+        <MudSelect T="string" Label="Tags" MultiSelection="true" @bind-Value="value" @bind-SelectedValues="options">
+            @foreach (var tag in _tags)
+            {
+                <MudSelectItem T="string" Value="@tag">@tag</MudSelectItem>
+            }
+        </MudSelect>
+        
+        <MudButton Disabled="@_processing" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreatePost">
+            @if (_processing)
+            {
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                <MudText Class="ms-2">Procesando...</MudText>
+            }
+            else
+            {
+                <MudText>Crear</MudText>
+            }
+        </MudButton>
+    </MudItem>
+
+</MudGrid>
+
+@code {
+
+    private CancellationTokenSource _cts = new();
+    #region IDisposable
+
+    public void Dispose()
+    {
+        _cts.Cancel();
+        _cts.Dispose();
+    }
+
+    #endregion
+    /// <summary>
+    /// Indicador de estado del proceso para botón
+    /// </summary>
+    private bool _processing = false;
+
+    private string[] _tags = {"Swift", ".Net"};
+
+    private string value { get; set; } = "Nothing selected";
+    
+    private IEnumerable<string> options { get; set; } = new HashSet<string>();
+
+    
+    #region Post Creacion
+    /// <summary>
+    /// Título del post
+    /// </summary>
+    private string _title;
+    /// <summary>
+    /// Contenido del post
+    /// </summary>
+    private string _body = "text *italics* and **bold**";
+
+    #endregion
+
+
+    /// <summary>
+    /// Creamos el post
+    /// </summary>
+    async Task CreatePost()
+    {
+        _processing = true;
+        
+        var postToCreate = new PostViewDetailDTO
+        {
+            PostTitle = _title,
+            PostContent = _body
+        };
+        await PostService.CreatePostAsync(postToCreate, _cts.Token);
+        _processing = false;
+    }
+}

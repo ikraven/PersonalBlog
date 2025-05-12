@@ -1,0 +1,59 @@
+# Build results
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+*.vspscc
+*.user
+*.suo
+*.sln.docstates
+
+# Rider project files
+.idea/
+*.sln.iml
+.idea.sln.iml
+
+# Rider workspace cache
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/gradle.xml
+.idea/**/libraries/
+.idea/**/vcs.xml
+
+# Rider generated .DotSettings.user files
+*.DotSettings.user
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Others
+*.dbmdl
+*.bak
+*.backup
+*.tmp
+*.temp
+*.swp
+*~
+
+# Logs
+*.log
+
+# npm packages
+node_modules/
+
+# VS Code (por si alguien colabora desde allí)
+.vscode/
+
+# Blazor-specific
+wwwroot/dist/
+wwwroot/node_modules/

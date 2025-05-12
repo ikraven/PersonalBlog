@@ -18,4 +18,15 @@ public interface IRepository<IEntityBase> where IEntityBase : class
     /// <returns></returns>
     Task<IEntityBase> GetByIdNoTrackingAsync(Guid id, CancellationToken cancellationToken = default);
     
+    /// <summary>
+    /// Crea la entidad
+    /// </summary>
+    /// <param name="entity"></param>
+    void Add(IEntityBase entity);
+    /// <summary>
+    /// Guarda datos de entidades
+    /// </summary>
+    /// <param name="cancellationToken">Token de cancelación</param>
+    /// <returns></returns>
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

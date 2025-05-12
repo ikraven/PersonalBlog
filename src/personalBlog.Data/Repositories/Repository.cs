@@ -31,4 +31,14 @@ public class Repository<TEntity> : IRepository<TEntity>
         return GetQueryable().AsNoTracking().FirstAsync(q => q.Id.Equals(id), cancellationToken );
 
     }
+
+    public void Add(TEntity entity)
+    {
+        _context.Set<TEntity>().Add(entity);
+    }
+
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.SaveChangesAsync(cancellationToken);
+    }
 }

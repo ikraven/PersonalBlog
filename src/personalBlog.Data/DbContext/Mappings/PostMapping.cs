@@ -11,6 +11,6 @@ public class PostMapping: IEntityTypeConfiguration<Post>
         builder.HasKey(u => u.Id); 
         builder.HasOne(u => u.PostContent)
             .WithOne(p => p.Post)
-            .HasForeignKey<PostContent>(p => p.PostID);
+            .HasForeignKey<PostContent>(p => p.PostId);
     }
 }
