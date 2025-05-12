@@ -10,7 +10,7 @@ namespace personalBlog.Api.Controllers;
 
 [ApiController]
 /// <summary>Endpoints utilizados para gestionar los convenios de los periodos.</summary>
-[Route("api/blog/posts")]
+[Route("api/blog/tags")]
 public class TagController(IMediator mediator) : BlogBaseController(mediator)
 {
     private readonly IMediator _mediator = mediator;

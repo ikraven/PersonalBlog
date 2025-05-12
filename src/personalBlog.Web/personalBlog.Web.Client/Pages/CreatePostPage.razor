@@ -81,7 +81,8 @@
         var postToCreate = new PostViewDetailDTO
         {
             PostTitle = _title,
-            PostContent = _body
+            PostContent = _body,
+            PostTags = _tags.ToList()
         };
         await PostService.CreatePostAsync(postToCreate, _cts.Token);
         _processing = false;
