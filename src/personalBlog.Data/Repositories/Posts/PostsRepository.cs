@@ -27,7 +27,6 @@ public class PostsRepository : Repository<Post>, IPostsRepository
                 Id = s.Id,
                 PostTitle = s.PostTitle,
                 PostContent = s.PostContent.Content,
-                PostTags = s.PostTags.Count > 0 ? s.PostTags.Select(t => t.Title).ToList() : new List<string> { },
                 CreateDate = s.CreateDate,
                 ReadingTime = s.ReadingTime,
                 PublishDate = s.PublishDate,

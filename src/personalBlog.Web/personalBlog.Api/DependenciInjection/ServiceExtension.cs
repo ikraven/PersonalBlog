@@ -1,4 +1,5 @@
 using personalBlog.Data.Repositories.Posts;
+using personalBlog.Data.Repositories.Tags;
 
 namespace personalBlog.Api.DependenciInjection;
 
@@ -8,5 +9,6 @@ public static class ServiceExtension
     {
         // Ejemplo de registro de servicios
         services.AddScoped<IPostsRepository, PostsRepository>();
+        services.AddScoped<ITagRepository, TagRepository>();
     }
 }

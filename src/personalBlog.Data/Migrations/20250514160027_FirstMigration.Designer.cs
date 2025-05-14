@@ -11,8 +11,8 @@ using personalBlog.DAta.DbContext;
 namespace personalBlog.Data.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20241229103422_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250514160027_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,15 +80,36 @@ namespace personalBlog.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("PostID")
+                    b.Property<Guid>("PostId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostID")
+                    b.HasIndex("PostId")
                         .IsUnique();
 
                     b.ToTable("PostContent");
+                });
+
+            modelBuilder.Entity("personalBlog.Domain.Models.Posts.PostTag", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("TagId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PostTag");
                 });
 
             modelBuilder.Entity("personalBlog.Domain.Models.Posts.Tags", b =>
@@ -97,16 +118,14 @@ namespace personalBlog.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Tags");
                 });
@@ -126,18 +145,30 @@ namespace personalBlog.Data.Migrations
                 {
                     b.HasOne("personalBlog.Domain.Models.Posts.Post", "Post")
                         .WithOne("PostContent")
-                        .HasForeignKey("personalBlog.Domain.Models.Posts.PostContent", "PostID")
+                        .HasForeignKey("personalBlog.Domain.Models.Posts.PostContent", "PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("personalBlog.Domain.Models.Posts.Tags", b =>
+            modelBuilder.Entity("personalBlog.Domain.Models.Posts.PostTag", b =>
                 {
-                    b.HasOne("personalBlog.Domain.Models.Posts.Post", null)
+                    b.HasOne("personalBlog.Domain.Models.Posts.Post", "Post")
                         .WithMany("PostTags")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("personalBlog.Domain.Models.Posts.Tags", "Tag")
+                        .WithMany("PostTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("personalBlog.Domain.Models.Posts.Post", b =>
@@ -147,6 +178,11 @@ namespace personalBlog.Data.Migrations
 
                     b.Navigation("PostMedia");
 
+                    b.Navigation("PostTags");
+                });
+
+            modelBuilder.Entity("personalBlog.Domain.Models.Posts.Tags", b =>
+                {
                     b.Navigation("PostTags");
                 });
 #pragma warning restore 612, 618

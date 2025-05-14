@@ -37,7 +37,7 @@ public class Post : IEntityBase
     /// <summary>
     /// Categorías del Post
     /// </summary>
-    public List<Tags> PostTags { get; set; } = [];
+    public List<PostTag> PostTags { get; set; } = [];
     
     /// <summary>
     /// Estado del post

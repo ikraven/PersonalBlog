@@ -1,0 +1,29 @@
+@page "/tags"
+
+
+
+<MudContainer Class="d-flex flex-column justify-center">
+    <h2>Categorías</h2>
+    <MudSimpleTable Style="overflow-x: auto;">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var row in _Tags)
+        {
+            <tr>
+                <td>@row.Key</td>
+                <td>@row.Value</td>
+            </tr>
+        }
+        </tbody>
+    </MudSimpleTable>
+   
+</MudContainer>
+
+@code {
+    private List<KeyValuePair<Guid, string>> _Tags = [];
+}

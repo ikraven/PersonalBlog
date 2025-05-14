@@ -48,7 +48,7 @@ public class CreatePostCommand : IRequest<PostViewDetailDTO>
                 Id = postId,
                 Status = Post.PostStatus.Draft,
                 CreateDate = _timeProvider.GetLocalNow().DateTime,
-                PostTags = tags,
+                PostTags = [],
                 PostContent = content,
                 PostTitle = request.ViewDetailDto.PostTitle,
             };
